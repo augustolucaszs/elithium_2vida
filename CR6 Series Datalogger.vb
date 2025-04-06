@@ -24,9 +24,60 @@ Public Modbus_PCS_real(52) As Float
 Public Modbus_FV_BLOC_C(19) As Float
 Public Modbus_BAT_2_VIDA(19) As Float
 Public Modbus_RESERVA(19) As Float
+
+Public Modbus_BAT_2_VIDA_1(14) As Long
+Public Modbus_BAT_2_VIDA_2(15) As Long
+Public Modbus_BAT_2_VIDA_3(17) As Float
+
 Public Samsung_Handle As Long
 Public Socket As Long
 Public Result As Long
+
+Alias Modbus_BAT_2_VIDA_1(2)= MRR_BMS1_T
+Alias Modbus_BAT_2_VIDA_1(3)= MRR_BMS1_TMIN
+Alias Modbus_BAT_2_VIDA_1(4)= MRR_BMS1_TMAX
+Alias Modbus_BAT_2_VIDA_1(5)= MRR_BMS1_VMIN_N
+Alias Modbus_BAT_2_VIDA_1(6)= MRR_BMS1_VMAX_N
+Alias Modbus_BAT_2_VIDA_1(7)= MRR_BMS1_RMIN_N
+Alias Modbus_BAT_2_VIDA_1(8)= MRR_BMS1_RMAX_N
+Alias Modbus_BAT_2_VIDA_1(9)= MRR_BMS1_TMIN_N
+Alias Modbus_BAT_2_VIDA_1(10)= MRR_BMS1_TMAX_N
+Alias Modbus_BAT_2_VIDA_1(11)= MRR_BMS1_SOH
+Alias Modbus_BAT_2_VIDA_1(12)= MRR_BMS1_SOC
+Alias Modbus_BAT_2_VIDA_1(13)= MRR_BMS1_CHARGE_LIM
+Alias Modbus_BAT_2_VIDA_1(14)= MRR_BMS1_DISCHARGE_LIM
+
+Alias Modbus_BAT_2_VIDA_2(2)= MRR_BMS2_T
+Alias Modbus_BAT_2_VIDA_2(3)= MRR_BMS2_TMIN
+Alias Modbus_BAT_2_VIDA_2(4)= MRR_BMS2_TMAX
+Alias Modbus_BAT_2_VIDA_2(5)= MRR_BMS2_VMIN_N
+Alias Modbus_BAT_2_VIDA_2(6)= MRR_BMS2_VMAX_N
+Alias Modbus_BAT_2_VIDA_2(7)= MRR_BMS2_RMIN_N
+Alias Modbus_BAT_2_VIDA_2(8)= MRR_BMS2_RMAX_N
+Alias Modbus_BAT_2_VIDA_2(9)= MRR_BMS2_TMIN_N
+Alias Modbus_BAT_2_VIDA_2(10)= MRR_BMS2_TMAX_N
+Alias Modbus_BAT_2_VIDA_2(11)= MRR_BMS2_SOH
+Alias Modbus_BAT_2_VIDA_2(12)= MRR_BMS2_SOC
+Alias Modbus_BAT_2_VIDA_2(13)= MRR_BMS2_CHARGE_LIM
+Alias Modbus_BAT_2_VIDA_2(14)= MRR_BMS2_DISCHARGE_LIM
+Alias Modbus_BAT_2_VIDA_2(15)= MRR_SOC_MEDIO
+
+Alias Modbus_BAT_2_VIDA_3(2)= MRR_BMS_VDC_TOTAL
+Alias Modbus_BAT_2_VIDA_3(3)= MRR_BMS_IDC_TOTAL
+Alias Modbus_BAT_2_VIDA_3(4)= MRR_BMS1_VDC
+Alias Modbus_BAT_2_VIDA_3(5)= MRR_BMS1_IDC
+Alias Modbus_BAT_2_VIDA_3(6)= MRR_BMS1_R
+Alias Modbus_BAT_2_VIDA_3(7)= MRR_BMS1_VMIN
+Alias Modbus_BAT_2_VIDA_3(8)= MRR_BMS1_VMAX
+Alias Modbus_BAT_2_VIDA_3(9)= MRR_BMS1_RMIN
+Alias Modbus_BAT_2_VIDA_3(10)= MRR_BMS1_RMAX
+Alias Modbus_BAT_2_VIDA_3(11)= MRR_BMS2_VDC
+Alias Modbus_BAT_2_VIDA_3(12)= MRR_BMS2_IDC
+Alias Modbus_BAT_2_VIDA_3(13)= MRR_BMS2_R
+Alias Modbus_BAT_2_VIDA_3(14)= MRR_BMS2_VMIN
+Alias Modbus_BAT_2_VIDA_3(15)= MRR_BMS2_VMAX
+Alias Modbus_BAT_2_VIDA_3(16)= MRR_BMS2_RMIN
+Alias Modbus_BAT_2_VIDA_3(17)= MRR_BMS2_RMAX
 
 Alias Modbus_warranty(1)= Dummy
 Alias Modbus_warranty(2)= Tensao_Saida_BMS
@@ -1581,8 +1632,310 @@ Minimum (1,MRR_MM_FV_BLOC_C_I_NEUTRO,FP2,0,0)
 FieldNames ("MRR_MM_FV_BLOC_C_I_NEUTRO_Min")
 EndTable
 
+DataTable (BAT_2_VIDA_CC,1,-1)
+  DataInterval (0,1,Min,10)
+  CardOut (0,-1)
+
+  'Sample (1,MRR_BMS1_T,FP2)
+  Average (1,MRR_BMS1_T,FP2,0.0)
+  FieldNames ("MRR_BMS1_T_Average")
+  ' Sample (1,MRR_BMS1_T,FP2)
+  Maximum (1,MRR_BMS1_T,FP2, 0.0,0.0)
+  FieldNames ("MRR_BMS1_T_Max")
+   'Sample (1,MRR_BMS1_T,FP2)
+  Minimum (1,MRR_BMS1_T,FP2,0.0,0.0)
+  FieldNames ("MRR_BMS1_T_Min")
+
+  Average (1,MRR_BMS1_TMIN,FP2,0)
+  FieldNames ("MRR_BMS1_TMIN_Average")
+  Maximum (1,MRR_BMS1_TMIN,FP2, 0,0)
+  FieldNames ("MRR_BMS1_TMIN_Max")
+  Minimum (1,MRR_BMS1_TMIN,FP2,0,0)
+  FieldNames ("MRR_BMS1_TMIN_Min")
+
+  Average (1,MRR_BMS1_TMAX,FP2,0)
+  FieldNames ("MRR_BMS1_TMAX_Average")
+  Maximum (1,MRR_BMS1_TMAX,FP2, 0,0)
+  FieldNames ("MRR_BMS1_TMAX_Max")
+  Minimum (1,MRR_BMS1_TMAX,FP2,0,0)
+  FieldNames ("MRR_BMS1_TMAX_Min")
+
+  Average (1,MRR_BMS1_VMIN_N,FP2,0)
+  FieldNames ("MRR_BMS1_VMIN_N_Average")
+  Maximum (1,MRR_BMS1_VMIN_N,FP2, 0,0)
+  FieldNames ("MRR_BMS1_VMIN_N_Max")
+  Minimum (1,MRR_BMS1_VMIN_N,FP2,0,0)
+  FieldNames ("MRR_BMS1_VMIN_N_Min")
+
+  Average (1,MRR_BMS1_VMAX_N,FP2,0)
+  FieldNames ("MRR_BMS1_VMAX_N_Average")
+  Maximum (1,MRR_BMS1_VMAX_N,FP2, 0,0)
+  FieldNames ("MRR_BMS1_VMAX_N_Max")
+  Minimum (1,MRR_BMS1_VMAX_N,FP2,0,0)
+  FieldNames ("MRR_BMS1_VMAX_N_Min")
+
+  Average (1,MRR_BMS1_RMIN_N,FP2,0)
+  FieldNames ("MRR_BMS1_RMIN_N_Average")
+  Maximum (1,MRR_BMS1_RMIN_N,FP2, 0,0)
+  FieldNames ("MRR_BMS1_RMIN_N_Max")
+  Minimum (1,MRR_BMS1_RMIN_N,FP2,0,0)
+  FieldNames ("MRR_BMS1_RMIN_N_Min")
+
+  Average (1,MRR_BMS1_RMAX_N,FP2,0)
+  FieldNames ("MRR_BMS1_RMAX_N_Average")
+  Maximum (1,MRR_BMS1_RMAX_N,FP2, 0,0)
+  FieldNames ("MRR_BMS1_RMAX_N_Max")
+  Minimum (1,MRR_BMS1_RMAX_N,FP2,0,0)
+  FieldNames ("MRR_BMS1_RMAX_N_Min")
+
+  Average (1,MRR_BMS1_TMIN_N,FP2,0)
+  FieldNames ("MRR_BMS1_TMIN_N_Average")
+  Maximum (1,MRR_BMS1_TMIN_N,FP2, 0,0)
+  FieldNames ("MRR_BMS1_TMIN_N_Max")
+  Minimum (1,MRR_BMS1_TMIN_N,FP2,0,0)
+  FieldNames ("MRR_BMS1_TMIN_N_Min")
+
+  Average (1,MRR_BMS1_TMAX_N,FP2,0)
+  FieldNames ("MRR_BMS1_TMAX_N_Average")
+  Maximum (1,MRR_BMS1_TMAX_N,FP2, 0,0)
+  FieldNames ("MRR_BMS1_TMAX_N_Max")
+  Minimum (1,MRR_BMS1_TMAX_N,FP2,0,0)
+  FieldNames ("MRR_BMS1_TMAX_N_Min")
+
+  Average (1,MRR_BMS1_SOH,FP2,0)
+  FieldNames ("MRR_BMS1_SOH_Average")
+  Maximum (1,MRR_BMS1_SOH,FP2, 0,0)
+  FieldNames ("MRR_BMS1_SOH_Max")
+  Minimum (1,MRR_BMS1_SOH,FP2,0,0)
+  FieldNames ("MRR_BMS1_SOH_Min")
+
+  Average (1,MRR_BMS1_SOC,FP2,0)
+  FieldNames ("MRR_BMS1_SOC_Average")
+  Maximum (1,MRR_BMS1_SOC,FP2, 0,0)
+  FieldNames ("MRR_BMS1_SOC_Max")
+  Minimum (1,MRR_BMS1_SOC,FP2,0,0)
+  FieldNames ("MRR_BMS1_SOC_Min")
+
+  Average (1,MRR_BMS1_CHARGE_LIM,FP2,0)
+  FieldNames ("MRR_BMS1_CHARGE_LIM_Average")
+  Maximum (1,MRR_BMS1_CHARGE_LIM,FP2, 0,0)
+  FieldNames ("MRR_BMS1_CHARGE_LIM_Max")
+  Minimum (1,MRR_BMS1_CHARGE_LIM,FP2,0,0)
+  FieldNames ("MRR_BMS1_CHARGE_LIM_Min")
+
+  Average (1,MRR_BMS1_DISCHARGE_LIM,FP2,0)
+  FieldNames ("MRR_BMS1_DISCHARGE_LIM_Average")
+  Maximum (1,MRR_BMS1_DISCHARGE_LIM,FP2, 0,0)
+  FieldNames ("MRR_BMS1_DISCHARGE_LIM_Max")
+  Minimum (1,MRR_BMS1_DISCHARGE_LIM,FP2,0,0)
+  FieldNames ("MRR_BMS1_DISCHARGE_LIM_Min")
 
 
+
+  Average (1,MRR_BMS2_TMIN,FP2,0)
+  FieldNames ("MRR_BMS2_TMIN_Average")
+  Maximum (1,MRR_BMS2_TMIN,FP2, 0,0)
+  FieldNames ("MRR_BMS2_TMIN_Max")
+  Minimum (1,MRR_BMS2_TMIN,FP2,0,0)
+  FieldNames ("MRR_BMS2_TMIN_Min")
+
+  Average (1,MRR_BMS2_TMAX,FP2,0)
+  FieldNames ("MRR_BMS2_TMAX_Average")
+  Maximum (1,MRR_BMS2_TMAX,FP2, 0,0)
+  FieldNames ("MRR_BMS2_TMAX_Max")
+  Minimum (1,MRR_BMS2_TMAX,FP2,0,0)
+  FieldNames ("MRR_BMS2_TMAX_Min")
+
+  Average (1,MRR_BMS2_VMIN_N,FP2,0)
+  FieldNames ("MRR_BMS2_VMIN_N_Average")
+  Maximum (1,MRR_BMS2_VMIN_N,FP2, 0,0)
+  FieldNames ("MRR_BMS2_VMIN_N_Max")
+  Minimum (1,MRR_BMS2_VMIN_N,FP2,0,0)
+  FieldNames ("MRR_BMS2_VMIN_N_Min")
+
+  Average (1,MRR_BMS2_VMAX_N,FP2,0)
+  FieldNames ("MRR_BMS2_VMAX_N_Average")
+  Maximum (1,MRR_BMS2_VMAX_N,FP2, 0,0)
+  FieldNames ("MRR_BMS2_VMAX_N_Max")
+  Minimum (1,MRR_BMS2_VMAX_N,FP2,0,0)
+  FieldNames ("MRR_BMS2_VMAX_N_Min")
+
+  Average (1,MRR_BMS2_RMIN_N,FP2,0)
+  FieldNames ("MRR_BMS2_RMIN_N_Average")
+  Maximum (1,MRR_BMS2_RMIN_N,FP2, 0,0)
+  FieldNames ("MRR_BMS2_RMIN_N_Max")
+  Minimum (1,MRR_BMS2_RMIN_N,FP2,0,0)
+  FieldNames ("MRR_BMS2_RMIN_N_Min")
+
+  Average (1,MRR_BMS2_RMAX_N,FP2,0)
+  FieldNames ("MRR_BMS2_RMAX_N_Average")
+  Maximum (1,MRR_BMS2_RMAX_N,FP2, 0,0)
+  FieldNames ("MRR_BMS2_RMAX_N_Max")
+  Minimum (1,MRR_BMS2_RMAX_N,FP2,0,0)
+  FieldNames ("MRR_BMS2_RMAX_N_Min")
+
+  Average (1,MRR_BMS2_TMIN_N,FP2,0)
+  FieldNames ("MRR_BMS2_TMIN_N_Average")
+  Maximum (1,MRR_BMS2_TMIN_N,FP2, 0,0)
+  FieldNames ("MRR_BMS2_TMIN_N_Max")
+  Minimum (1,MRR_BMS2_TMIN_N,FP2,0,0)
+  FieldNames ("MRR_BMS2_TMIN_N_Min")
+
+  Average (1,MRR_BMS2_TMAX_N,FP2,0)
+  FieldNames ("MRR_BMS2_TMAX_N_Average")
+  Maximum (1,MRR_BMS2_TMAX_N,FP2, 0,0)
+  FieldNames ("MRR_BMS2_TMAX_N_Max")
+  Minimum (1,MRR_BMS2_TMAX_N,FP2,0,0)
+  FieldNames ("MRR_BMS2_TMAX_N_Min")
+
+  Average (1,MRR_BMS2_SOH,FP2,0)
+  FieldNames ("MRR_BMS2_SOH_Average")
+  Maximum (1,MRR_BMS2_SOH,FP2, 0,0)
+  FieldNames ("MRR_BMS2_SOH_Max")
+  Minimum (1,MRR_BMS2_SOH,FP2,0,0)
+  FieldNames ("MRR_BMS2_SOH_Min")
+
+  Average (1,MRR_BMS2_SOC,FP2,0)
+  FieldNames ("MRR_BMS2_SOC_Average")
+  Maximum (1,MRR_BMS2_SOC,FP2, 0,0)
+  FieldNames ("MRR_BMS2_SOC_Max")
+  Minimum (1,MRR_BMS2_SOC,FP2,0,0)
+  FieldNames ("MRR_BMS2_SOC_Min")
+
+  Average (1,MRR_BMS2_CHARGE_LIM,FP2,0)
+  FieldNames ("MRR_BMS2_CHARGE_LIM_Average")
+  Maximum (1,MRR_BMS2_CHARGE_LIM,FP2, 0,0)
+  FieldNames ("MRR_BMS2_CHARGE_LIM_Max")
+  Minimum (1,MRR_BMS2_CHARGE_LIM,FP2,0,0)
+  FieldNames ("MRR_BMS2_CHARGE_LIM_Min")
+
+  Average (1,MRR_BMS2_DISCHARGE_LIM,FP2,0)
+  FieldNames ("MRR_BMS2_DISCHARGE_LIM_Average")
+  Maximum (1,MRR_BMS2_DISCHARGE_LIM,FP2, 0,0)
+  FieldNames ("MRR_BMS2_DISCHARGE_LIM_Max")
+  Minimum (1,MRR_BMS2_DISCHARGE_LIM,FP2,0,0)
+  FieldNames ("MRR_BMS2_DISCHARGE_LIM_Min")
+
+  Average (1,MRR_SOC_MEDIO,FP2,0)
+  FieldNames ("MRR_SOC_MEDIO_Average")
+  Maximum (1,MRR_SOC_MEDIO,FP2, 0,0)
+  FieldNames ("MRR_SOC_MEDIO_Max")
+  Minimum (1,MRR_SOC_MEDIO,FP2,0,0)
+  FieldNames ("MRR_SOC_MEDIO_Min")
+
+  Average (1,MRR_BMS_VDC_TOTAL,FP2,0)
+  FieldNames ("MRR_BMS_VDC_TOTAL_Average")
+  Maximum (1,MRR_BMS_VDC_TOTAL,FP2, 0,0)
+  FieldNames ("MRR_BMS_VDC_TOTAL_Max")
+  Minimum (1,MRR_BMS_VDC_TOTAL,FP2,0,0)
+  FieldNames ("MRR_BMS_VDC_TOTAL_Min")
+
+  Average (1,MRR_BMS_IDC_TOTAL,FP2,0)
+  FieldNames ("MRR_BMS_IDC_TOTAL_Average")
+  Maximum (1,MRR_BMS_IDC_TOTAL,FP2, 0,0)
+  FieldNames ("MRR_BMS_IDC_TOTAL_Max")
+  Minimum (1,MRR_BMS_IDC_TOTAL,FP2,0,0)
+  FieldNames ("MRR_BMS_IDC_TOTAL_Min")
+
+  Average (1,MRR_BMS1_VDC,FP2,0)
+  FieldNames ("MRR_BMS1_VDC_Average")
+  Maximum (1,MRR_BMS1_VDC,FP2, 0,0)
+  FieldNames ("MRR_BMS1_VDC_Max")
+  Minimum (1,MRR_BMS1_VDC,FP2,0,0)
+  FieldNames ("MRR_BMS1_VDC_Min")
+
+  Average (1,MRR_BMS1_IDC,FP2,0)
+  FieldNames ("MRR_BMS1_IDC_Average")
+  Maximum (1,MRR_BMS1_IDC,FP2, 0,0)
+  FieldNames ("MRR_BMS1_IDC_Max")
+  Minimum (1,MRR_BMS1_IDC,FP2,0,0)
+  FieldNames ("MRR_BMS1_IDC_Min")
+
+  Average (1,MRR_BMS1_R,FP2,0)
+  FieldNames ("MRR_BMS1_R_Average")
+  Maximum (1,MRR_BMS1_R,FP2, 0,0)
+  FieldNames ("MRR_BMS1_R_Max")
+  Minimum (1,MRR_BMS1_R,FP2,0,0)
+  FieldNames ("MRR_BMS1_R_Min")
+
+  Average (1,MRR_BMS1_VMIN,FP2,0)
+  FieldNames ("MRR_BMS1_VMIN_Average")
+  Maximum (1,MRR_BMS1_VMIN,FP2, 0,0)
+  FieldNames ("MRR_BMS1_VMIN_Max")
+  Minimum (1,MRR_BMS1_VMIN,FP2,0,0)
+  FieldNames ("MRR_BMS1_VMIN_Min")
+
+  Average (1,MRR_BMS1_VMAX,FP2,0)
+  FieldNames ("MRR_BMS1_VMAX_Average")
+  Maximum (1,MRR_BMS1_VMAX,FP2, 0,0)
+  FieldNames ("MRR_BMS1_VMAX_Max")
+  Minimum (1,MRR_BMS1_VMAX,FP2,0,0)
+  FieldNames ("MRR_BMS1_VMAX_Min")
+
+  Average (1,MRR_BMS1_RMIN,FP2,0)
+  FieldNames ("MRR_BMS1_RMIN_Average")
+  Maximum (1,MRR_BMS1_RMIN,FP2, 0,0)
+  FieldNames ("MRR_BMS1_RMIN_Max")
+  Minimum (1,MRR_BMS1_RMIN,FP2,0,0)
+  FieldNames ("MRR_BMS1_RMIN_Min")
+
+  Average (1,MRR_BMS1_RMAX,FP2,0)
+  FieldNames ("MRR_BMS1_RMAX_Average")
+  Maximum (1,MRR_BMS1_RMAX,FP2, 0,0)
+  FieldNames ("MRR_BMS1_RMAX_Max")
+  Minimum (1,MRR_BMS1_RMAX,FP2,0,0)
+  FieldNames ("MRR_BMS1_RMAX_Min")
+
+  Average (1,MRR_BMS2_VDC,FP2,0)
+  FieldNames ("MRR_BMS2_VDC_Average")
+  Maximum (1,MRR_BMS2_VDC,FP2, 0,0)
+  FieldNames ("MRR_BMS2_VDC_Max")
+  Minimum (1,MRR_BMS2_VDC,FP2,0,0)
+  FieldNames ("MRR_BMS2_VDC_Min")
+
+  Average (1,MRR_BMS2_IDC,FP2,0)
+  FieldNames ("MRR_BMS2_IDC_Average")
+  Maximum (1,MRR_BMS2_IDC,FP2, 0,0)
+  FieldNames ("MRR_BMS2_IDC_Max")
+  Minimum (1,MRR_BMS2_IDC,FP2,0,0)
+  FieldNames ("MRR_BMS2_IDC_Min")
+
+  Average (1,MRR_BMS2_R,FP2,0)
+  FieldNames ("MRR_BMS2_R_Average")
+  Maximum (1,MRR_BMS2_R,FP2, 0,0)
+  FieldNames ("MRR_BMS2_R_Max")
+  Minimum (1,MRR_BMS2_R,FP2,0,0)
+  FieldNames ("MRR_BMS2_R_Min")
+
+  Average (1,MRR_BMS2_VMIN,FP2,0)
+  FieldNames ("MRR_BMS2_VMIN_Average")
+  Maximum (1,MRR_BMS2_VMIN,FP2, 0,0)
+  FieldNames ("MRR_BMS2_VMIN_Max")
+  Minimum (1,MRR_BMS2_VMIN,FP2,0,0)
+  FieldNames ("MRR_BMS2_VMIN_Min")
+
+  Average (1,MRR_BMS2_VMAX,FP2,0)
+  FieldNames ("MRR_BMS2_VMAX_Average")
+  Maximum (1,MRR_BMS2_VMAX,FP2, 0,0)
+  FieldNames ("MRR_BMS2_VMAX_Max")
+  Minimum (1,MRR_BMS2_VMAX,FP2,0,0)
+  FieldNames ("MRR_BMS2_VMAX_Min")
+
+  Average (1,MRR_BMS2_RMIN,FP2,0)
+  FieldNames ("MRR_BMS2_RMIN_Average")
+  Maximum (1,MRR_BMS2_RMIN,FP2, 0,0)
+  FieldNames ("MRR_BMS2_RMIN_Max")
+  Minimum (1,MRR_BMS2_RMIN,FP2,0,0)
+  FieldNames ("MRR_BMS2_RMIN_Min")
+  
+  Average (1,MRR_BMS2_RMAX,FP2,0)
+  FieldNames ("MRR_BMS2_RMAX_Average")
+  Maximum (1,MRR_BMS2_RMAX,FP2, 0,0)
+  FieldNames ("MRR_BMS2_RMAX_Max")
+  Minimum (1,MRR_BMS2_RMAX,FP2,0,0)
+  FieldNames ("MRR_BMS2_RMAX_Min")
+
+EndTable
 
 DataTable (BAT_2_VIDA,1,-1)
 DataInterval (0,1,Min,10)
@@ -1871,6 +2224,10 @@ BeginProg
     ModbusMaster (Result,Socket,-9600,1,3,Modbus_FV_BLOC_C(),14188,18,3,100,2)'14190 ate 14222
     ModbusMaster (Result,Socket,-9600,1,3,Modbus_BAT_2_VIDA(),14308,18,3,100,2)'14308 ate 14342
     ModbusMaster (Result,Socket,-9600,1,3,Modbus_RESERVA(),14368,18,3,100,2)'14368 ate 14342
+    ModbusMaster (Result,Socket,-9600,1,3,Modbus_BAT_2_VIDA_1,16308,13,3,100,1)' 16308 int (adjusted to read 13 variables, each using 1 register)
+    ModbusMaster (Result,Socket,-9600,1,3,Modbus_BAT_2_VIDA_2,16336,14,3,100,1)' 16336 int (adjusted to read 14 variables, each using 1 register)
+    ModbusMaster (Result,Socket,-9600,1,3,Modbus_BAT_2_VIDA_3(),16350,16,3,100,2)' 16350 float (adjusted to read 16 variables, each using 2 registers)
+
     CallTable GARANTIA
     CallTable QDCA
     CallTable Blocos_A_B
@@ -1881,6 +2238,7 @@ BeginProg
     CallTable PCS_real
     CallTable FV_BLOC_C
     CallTable BAT_2_VIDA
+    CallTable BAT_2_VIDA_CC
     CallTable RESERVA
 	NextScan
 EndProg
